@@ -1,17 +1,22 @@
 <template>
-  <div class="slide-show">
+  <div class="slide-show" @mouseover="clearInv" @mouseout="runInv">
       <div class="slide-img">
           <a :href="slides[nowIndex].href">
-              <img :src="slides[nowIndex].src" alt="">
+              <transition name="slide-trans">
+                  <img v-if='isShow' :src="slides[nowIndex].src">
+              </transition>
+              <transition name="slide-trans-old">
+                  <img v-if='!isShow' :src="slides[nowIndex].src">
+              </transition>
           </a>
       </div>
       <h2>{{ slides[nowIndex].title}}</h2>
       <ul class="slide-pages">
-          <li @click="gotoNext()">&lt;</li>
+          <li @click="goto(prevIndex)">&lt;</li>
           <li v-for="(item, index) in slides" @click="goto(index)">
-              <a>{{ index + 1 }}</a>
+              <a :class='{on: index === nowIndex}'>{{ index + 1 }}</a>
           </li>
-          <li @click="gotoPrev()">&gt;</li>
+          <li @click="goto(nextIndex)">&gt;</li>
       </ul>
 
   </div>
@@ -23,45 +28,65 @@
             slides: {
                 type: Array,
                 defaulet: [],
+            },
+            inv: {
+                type: Number,
+                defaulet: 1000,
             }
         },
         data() {
             return{
-                nowIndex: 0
+                nowIndex: 0,
+                isShow: true
             }
         },
         methods: {
             goto(index) {
-                this.nowIndex = index
+                this.isShow = false
+                setTimeout(() => {
+                    this.isShow = true
+                    this.nowIndex = index
+                },10)
             },
-            gotoNext() {
-                if(this.nowIndex === 0) {
-                    this.nowIndex = this.slides.length
-                }
-                this.nowIndex --
+            runInv() {
+                this.invId = setInterval(() => {
+                    this.goto(this.nextIndex)
+                },this.inv)
             },
-            gotoPrev() {
-                if(this.nowIndex === this.slides.length) {
-                    this.nowIndex = 0
-                }
-                this.nowIndex ++
+            clearInv() {
+                clearInterval(this.invId)
             }
+            // gotoNext() {
+            //     if(this.nowIndex === 0) {
+            //         this.nowIndex = this.slides.length
+            //     }
+            //     this.nowIndex --
+            // },
+            // gotoPrev() {
+            //     if(this.nowIndex === this.slides.length) {
+            //         this.nowIndex = 0
+            //     }
+            //     this.nowIndex ++
+            // }
         },
         computed: {
-            // prevIndex() {
-            //     if(this.nowIndex === 0) {
-            //         return this.slides.length - 1
-            //     }else{
-            //         return this.nowIndex - 1
-            //     }
-            // },
-            // nextIndex() {
-            //     if(this.nowIndex === this.slides.length - 1) {
-            //         return 0
-            //     }else {
-            //         return this.nowIndex + 1
-            //     }
-            // }
+            prevIndex() {
+                if(this.nowIndex === 0) {
+                    return this.slides.length - 1
+                }else{
+                    return this.nowIndex - 1
+                }
+            },
+            nextIndex() {
+                if(this.nowIndex === this.slides.length - 1) {
+                    return 0
+                }else {
+                    return this.nowIndex + 1
+                }
+            }
+        },
+        mounted() {
+            this.runInv()
         }
     }
 </script>

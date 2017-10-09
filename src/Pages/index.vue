@@ -62,6 +62,7 @@ export default {
   
     data() {
         return {
+          invTime: 2000,
             slides: [
         {
           src: require('../assets/slideShow/1.jpg'),
