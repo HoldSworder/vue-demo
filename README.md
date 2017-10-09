@@ -1,6 +1,8 @@
-# demo2
+# vue-demo
 
-> qzr
+使用vue做的第一个完整项目
+
+*利用json-server模拟后台json数据*
 
 ## Build Setup
 
