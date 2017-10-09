@@ -1,6 +1,8 @@
-# demo2
+# vue-demo
 
-> qzr
+使用vue做的第一个完整项目
+
+> BY qzr
 
 ## Build Setup
 
