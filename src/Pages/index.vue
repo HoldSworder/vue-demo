@@ -65,22 +65,22 @@ export default {
             slides: [
         {
           src: require('../assets/slideShow/1.jpg'),
-          title: 'xxx1',
+          title: '百花缭乱1',
           href: 'detail/analysis'
         },
         {
           src: require('../assets/slideShow/2.jpg'),
-          title: 'xxx2',
+          title: '男法三兄弟2',
           href: 'detail/count'
         },
         {
           src: require('../assets/slideShow/3.jpg'),
-          title: 'xxx3',
+          title: '女鬼剑士3',
           href: 'http://xxx.xxx.com'
         },
         {
           src: require('../assets/slideShow/4.jpg'),
-          title: 'xxx4',
+          title: '女圣职者4',
           href: 'detail/forecast'
         }
       ],

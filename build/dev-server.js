@@ -9,16 +9,7 @@ var opn = require('opn')
 var path = require('path')
 var express = require('express')
 
-var jsonServer = require('json-server')
-const apiServer = jsonServer.create()
-const apiRouter = jsonServer.router('db.json')
-const middlewares = jsonServer.defaults()
 
-apiServer.use(middlewares)
-apiServer.use(apiRouter)
-apiServer.listen(8081, () => {
-  console.log('JSON Server is running')
-})
 
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
@@ -78,7 +69,7 @@ app.use(hotMiddleware)
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-var uri = 'http://localhost:' + port
+
 
 var _resolve
 var readyPromise = new Promise(resolve => {
@@ -103,3 +94,59 @@ module.exports = {
     server.close()
   }
 }
+
+//json-server
+var jsonServer = require('json-server')
+const apiServer = jsonServer.create()
+const apiRouter = jsonServer.router('db.json')
+const middlewares = jsonServer.defaults()
+
+apiServer.use(middlewares)
+apiServer.use(apiRouter)
+apiServer.listen(8081, () => {
+  console.log('JSON Server is running')
+})
+
+var uri = 'http://localhost:' + port
+
+//body-parser
+// var apiServer = express()
+// var bodyParser = require('body-parser')
+// apiServer.use(bodyParser.urlencoded({ extended: true }))
+// apiServer.use(bodyParser.json())
+// var apiRouter = express.Router()
+// var fs = require('fs')
+// apiRouter.route('/:apiName')
+// .all(function (req, res) {
+//   fs.readFile('./db.json', 'utf8', function (err, data) {
+//     if (err) throw err
+//     var data = JSON.parse(data)
+//     if (data[req.params.apiName]) {
+//       res.json(data[req.params.apiName])  
+//     }
+//     else {
+//       res.send('no such api name')
+//     }
+    
+//   })
+// })
+
+
+// apiServer.use('/api', apiRouter);
+// apiServer.listen(port + 1, function (err) {
+//   if (err) {
+//     console.log(err)
+//     return
+//   }
+//   console.log('Listening at http://localhost:' + (port + 1) + '\n')
+// })
+
+// module.exports = app.listen(port, function (err) {
+//   if (err) {
+//     console.log(err)
+//     return
+//   }
+//   var uri = 'http://localhost:' + port
+//   console.log('Listening at ' + uri + '\n')
+//   opn(uri)
+// })

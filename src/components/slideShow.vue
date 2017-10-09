@@ -36,28 +36,32 @@
             },
             gotoNext() {
                 if(this.nowIndex === 0) {
-                    this.nowIndex = slides.length
+                    this.nowIndex = this.slides.length
                 }
                 this.nowIndex --
             },
             gotoPrev() {
-                if(this.nowIndex === slides.length) {
+                if(this.nowIndex === this.slides.length) {
                     this.nowIndex = 0
                 }
                 this.nowIndex ++
             }
         },
         computed: {
-            prevIndex() {
-                if(this.nowIndex === 0) {
-                    return this.slides.length - 1
-                }else{
-                    return this.nowIndex - 1
-                }
-            },
-            nextIndex() {
-
-            }
+            // prevIndex() {
+            //     if(this.nowIndex === 0) {
+            //         return this.slides.length - 1
+            //     }else{
+            //         return this.nowIndex - 1
+            //     }
+            // },
+            // nextIndex() {
+            //     if(this.nowIndex === this.slides.length - 1) {
+            //         return 0
+            //     }else {
+            //         return this.nowIndex + 1
+            //     }
+            // }
         }
     }
 </script>
