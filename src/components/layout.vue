@@ -5,9 +5,12 @@
 				<img src="../assets/logo.png" alt="">
 				<div class="head-nav">
 					<ul class="nav-list">
-						<li>登录</li>
-						<li class="nav-pile">|</li>
-						<li>注册</li>
+						<li>{{ username }}</li>
+						<li class="nav-pile" v-if="username !== ''">|</li>
+						<li @click="loginClick" v-if="username !== ''">退出</li>
+						<li @click="loginClick" v-if="username === ''">登录</li>
+						<li class="nav-pile" v-if="username === ''">|</li>
+						<li @click="logonClick" v-if="username === ''">注册</li>
 						<li class="nav-pile">|</li>
 						<li @click="aboutClick">关于</li>
 					</ul>
@@ -22,30 +25,57 @@
 		<div class="app-foot">
 			<p>2017 fishenal MIT</p>
 		</div>
-		<my-dialog :isShow="isShowDialog" @on-close="closeDialog">
+
+		<my-dialog :isShow="isShowAbout" @on-close="closeDialog('isShowAbout')">
 			<p>other hello</p>
 		</my-dialog>
+
+		<my-dialog :isShow="isShowLogon" @on-close="closeDialog('isShowLogon')">
+			<p>other hello2</p>
+		</my-dialog>
+
+		<my-dialog :isShow="isShowLogin" @on-close="closeDialog('isShowLogin')">
+			<log-form @has-log='onSuccessLog'></log-form>
+		</my-dialog>
+
 	</div>
 </template>
 
 <script>
 import Dialog from './base/dialog'
+import LogForm from './logForm'
+
 export default {
 	components: {
-		MyDialog: Dialog
+		MyDialog: Dialog,
+		LogForm
 	},
 	data() {
 		return {
-			isShowDialog: false
+			isShowAbout: false,
+			isShowLogon: false,
+			isShowLogin: false,
+			username: ''
 		}
 	},
 	methods: {
-		aboutClick() {
-			this.isShowDialog = true
+		
+		closeDialog(attr) {
+			this[attr] = false
 		},
-		closeDialog() {
-			this.isShowDialog = false
-		}
+		aboutClick() {
+			this.isShowAbout = true
+		},
+		logonClick() {
+			this.isShowLogon = true
+		},
+		loginClick() {
+			this.isShowLogin = true
+		},
+		onSuccessLog(data) {
+			this.closeDialog('isShowLogin')
+			this.username = data.username
+		} 
 	}
 }
 </script>
