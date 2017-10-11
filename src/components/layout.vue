@@ -2,7 +2,9 @@
 	<div>
 		<div class="app-head">
 			<div class="app-head-inner">
-				<img src="../assets/logo.png" alt="">
+				<router-link :to="{path: '/'}">
+					<img src="../assets/logo.png" alt="">
+				</router-link>
 				<div class="head-nav">
 					<ul class="nav-list">
 						<li>{{ username }}</li>
@@ -31,7 +33,7 @@
 		</my-dialog>
 
 		<my-dialog :isShow="isShowLogon" @on-close="closeDialog('isShowLogon')">
-			<p>other hello2</p>
+			<log-on @logon='logon'></log-on>
 		</my-dialog>
 
 		<my-dialog :isShow="isShowLogin" @on-close="closeDialog('isShowLogin')">
@@ -44,11 +46,13 @@
 <script>
 import Dialog from './base/dialog'
 import LogForm from './logForm'
+import LogOn from './logOn'
 
 export default {
 	components: {
 		MyDialog: Dialog,
-		LogForm
+		LogForm,
+		LogOn
 	},
 	data() {
 		return {
@@ -75,7 +79,10 @@ export default {
 		onSuccessLog(data) {
 			this.closeDialog('isShowLogin')
 			this.username = data.username
-		} 
+		} ,
+		logon() {
+			this.closeDialog('isShowLogon')
+		}
 	}
 }
 </script>

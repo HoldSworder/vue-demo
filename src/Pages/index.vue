@@ -25,14 +25,14 @@
 			</div>
 		</div>
 		<div class="index-right">
-			<!-- <slide-show :slides="slides" :inv="invTime" @onchange='doSomething'></slide-show> -->
+			<slide-show :slides="slides" :inv="invTime" @onchange='doSomething'></slide-show>
 			<div class="index-board-list">
 				<div class="index-board-item" v-for="(item, index) in boardList" :class="[{'line-last' : index % 2 !== 0}, 'index-board-' + item.id]">
 					<div class="index-board-item-inner">
 						<h2>{{ item.title }}</h2>
 						<p>{{ item.description }}</p>
 						<div class="index-board-button">
-							<a href="" class="button">立即购买</a>
+							<a :href="item.href" class="button">立即购买</a>
 						</div>
 					</div>
 				</div>
@@ -50,11 +50,29 @@ export default {
 	},
 
 	created: function() {
-		this.$http.get('http://localhost:8081/getNewsList').then((res) => {
-			this.newsList = res.data
-		}, (err) => {
+
+		//通过vue-resource获取ajax数据
+		// this.$http.get('http://localhost:8081/getNewsList').then((res) => {
+		// 	this.newsList = res.data
+		// 	console.log(res)
+		// }, (err) => {
+		// 	console.log(err)
+		// })
+
+
+		//fetch方式获取ajax数据
+		fetch('http://localhost:8081/getNewsList',{
+			method: 'get'
+		}).then((res) => {
+			return res.json()
+			// console.log(res.json())
+		}).then((json) => {
+			console.log(json)
+			this.newsList = json
+		}).catch((err) => {
 			console.log(err)
-		})
+			})
+
 	},
 	methods: {
 		doSomething() {
@@ -78,7 +96,7 @@ export default {
 				{
 					src: require('../assets/slideShow/3.jpg'),
 					title: '女鬼剑士3',
-					href: 'http://xxx.xxx.com'
+					href: 'detail/publish'
 				},
 				{
 					src: require('../assets/slideShow/4.jpg'),
@@ -92,25 +110,29 @@ export default {
 					description: '开放产品是一款开放产品',
 					toKey: '',
 					id: 'car',
-					saleout: false
+					saleout: false,
+					href: 'detail/count'
 				},
 				{
 					title: '品牌营销',
 					description: '品牌营销帮助你的产品更好地找到定位',
 					toKey: '',
-					id: 'earth'
+					id: 'earth',
+					href: 'detail/analysis'
 				},
 				{
 					title: '使命必达',
 					description: '使命必达快速迭代永远保持最前端的速度',
 					toKey: '',
-					id: 'loud'
+					id: 'loud',
+					href: 'detail/forecast'
 				},
 				{
 					title: '勇攀高峰',
 					description: '帮你勇闯高峰，到达事业的顶峰',
 					toKey: '',
-					id: 'hill'
+					id: 'hill',
+					href: 'detail/publish'
 				}
 			],
 			newsList: [
