@@ -10,7 +10,7 @@
                   购买数量：
               </div>
               <div class="sales-board-line-right">
-                <v-counter @on-change="onParamChange('buyNum', $event)"></v-counter>
+                <v-counter  @on-change="onParamChange('buyNum', $event)"></v-counter>
               </div>
           </div>
           <div class="sales-board-line">
@@ -113,10 +113,23 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import VSelection from '../../components/base/selection'
+import VCounter from '../../components/base/counter'
+import VChooser from '../../components/base/chooser'
+import VMulChooser from '../../components/base/multiplyChooser'
+import Dialog from '../../components/base/dialog'
+import BankChooser from '../../components/bankChooser'
+import CheckOrder from '../../components/checkOrder'
 export default {
   components: {
-    VSelection
+    VSelection,
+    VCounter,
+    VChooser,
+    VMulChooser,
+    MyDialog: Dialog,
+    BankChooser,
+    CheckOrder
   },
   data () {
     return {
@@ -189,9 +202,9 @@ export default {
         period: this.period.value,
         version: buyVersionsArray.join(',')
       }
-      this.$http.post('/api/getPrice', reqParams)
+      this.$http.post('http://localhost:8081/getPrice', reqParams)
       .then((res) => {
-        this.price = res.data.amount
+        this.price = res.data.buyNumber
       })
     },
     showPayDialog () {
@@ -220,7 +233,7 @@ export default {
         version: buyVersionsArray.join(','),
         bankId: this.bankId
       }
-      this.$http.post('/api/createOrder', reqParams)
+      this.$http.post('http://localhost:8081/createOrder', reqParams)
       .then((res) => {
         this.orderId = res.data.orderId
         this.isShowCheckOrder = true

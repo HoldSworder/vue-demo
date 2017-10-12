@@ -244,9 +244,13 @@
 </template>
 
 <script>
-
+import VSelection from '../../components/base/selection'
+import VChooser from '../../components/base/chooser'
 export default {
-
+  components: {
+    VChooser,
+    VSelection
+  },
   data () {
     return {
       buyTypes: [
