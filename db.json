@@ -26,7 +26,7 @@
     "userId": 123123
   },
   "getPrice": {
-    "buyNumber": 1,
+    "buyNumber": 13,
     "buyType": 0,
     "period": 0,
     "version": "0"
@@ -34,14 +34,13 @@
   "createOrder": {
     "buyNumber": 1,
     "buyType": 0,
-    "period": 0,
+    "period": 1,
     "version": "0,1",
-    "bankId": 301
+    "bankId": null
   },
   "getOrderList": {
     "query": "",
-    "productId": 0,
-    "startDate": "2017-10-06",
+    "startDate": "",
     "endDate": "2017-10-04"
   }
 }
