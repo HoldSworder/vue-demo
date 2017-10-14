@@ -2,7 +2,7 @@
 	<div @click="resetComponent">
 		<div class="app-head">
 			<div class="app-head-inner">
-				<router-link :to="{path: '/'}">
+				<router-link :to="{path: './'}">
 					<img src="../assets/logo.png" alt="">
 				</router-link>
 				<div class="head-nav">
