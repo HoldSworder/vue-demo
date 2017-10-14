@@ -46,37 +46,36 @@ export default {
   },
   data () {
     return {
-        "getOrderList": {
-          "list": [
-            {
-              "orderId": "ddj123",
-              "product": "数据统计",
-              "version": "高级版",
-              "period": "1年",
-              "buyNum": 2,
-              "date": "2016-10-10",
-              "amount": "500元"
-            },
-            {
-              "orderId": "yuj583",
-              "product": "流量分析",
-              "version": "户外版",
-              "period": "3个月",
-              "buyNum": 1,
-              "date": "2016-5-2",
-              "amount": "2200元"
-            },
-            {
-              "orderId": "pmd201",
-              "product": "广告发布",
-              "version": "商铺版",
-              "period": "3年",
-              "buyNum": 12,
-              "date": "2016-8-3",
-              "amount": "7890元"
-            }
-          ]
-        },
+      tableData: [],
+          // tableData: [
+          //   {
+          //     "orderId": "ddj123",
+          //     "product": "数据统计",
+          //     "version": "高级版",
+          //     "period": "1年",
+          //     "buyNum": 2,
+          //     "date": "2016-10-10",
+          //     "amount": "500元"
+          //   },
+          //   {
+          //     "orderId": "yuj583",
+          //     "product": "流量分析",
+          //     "version": "户外版",
+          //     "period": "3个月",
+          //     "buyNum": 1,
+          //     "date": "2016-5-2",
+          //     "amount": "2200元"
+          //   },
+          //   {
+          //     "orderId": "pmd201",
+          //     "product": "广告发布",
+          //     "version": "商铺版",
+          //     "period": "3年",
+          //     "buyNum": 12,
+          //     "date": "2016-8-3",
+          //     "amount": "7890元"
+          //   }
+          // ],
       query: '',
       productId: 0,
       startDate: '',
@@ -130,14 +129,13 @@ export default {
         }
       ],
       currentOrder: 'asc',
-      tableData: []
     }
   },
-  watch: {
-    query () {
-      this.getList()
-    }
-  },
+  // watch: {
+  //   query () {
+  //     this.getList()
+  //   }
+  // },
   methods: {
     productChange (obj) {
       this.productId = obj.value
@@ -150,6 +148,7 @@ export default {
     getEndDate (date) {
       this.endDate = date
       this.getList()
+          alert(this.tableData[0].orderId)
     },
     // getList () {
     //   let reqParams = {
@@ -181,9 +180,16 @@ export default {
     }
   },
   mounted () {
-    this.getList()
+    this.$store.dispatch('fetchOrderList')
+    console.log(tableData)
+  },
+  computed: {
+    tableData() {
+      return this.$store.getters.getOrderList
+    }
   }
 }
+
 </script>
 
 <style scoped>
